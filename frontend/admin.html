@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel</title>
+<style>background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+color: #f5f5f5;
+body { background:#000; color:white; font-family:Arial; padding:40px; }
+button { background:red; border:none; padding:10px; color:white; cursor:pointer; }border-radius: 25px;
+box-shadow: 0 0 15px rgba(255,46,99,0.6);
+</style>
+</head>
+<body>
+
+<h2>Admin Panel</h2>
+
+<p>Total Users (Local):</p>
+<button onclick="clearUsers()">Reset All Users</button>
+
+<script>
+function clearUsers() {
+  localStorage.clear();
+  alert("All local data cleared.");
+}
+</script>
+
+</body>
+</html>

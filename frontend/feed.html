@@ -1,0 +1,38 @@
+<div class="post">
+  <h3>CreatorOne</h3>
+  <p>Exclusive content 🔥</p>
+  <button onclick="subscribe('CreatorOne')">Subscribe ($9.99)</button>
+  <p id="subStatus1"></p>
+</div>
+
+<div class="post">
+  <h3>CreatorTwo</h3>
+  <p>Premium VIP Drops</p>
+  <button onclick="subscribe('CreatorTwo')">Subscribe ($14.99)</button>
+  <p id="subStatus2"></p>
+</div>
+<script>
+const user = localStorage.getItem("flamevip_user");
+
+if(!user){
+  window.location.href = "login.html";
+}
+
+document.getElementById("welcome").innerText = "Logged in as: " + user;
+
+function logout() {
+  localStorage.removeItem("flamevip_user");
+  window.location.href = "index.html";
+}
+
+function subscribe(creator) {
+  let subs = JSON.parse(localStorage.getItem("flamevip_subs")) || [];
+  if(!subs.includes(creator)) {
+    subs.push(creator);
+    localStorage.setItem("flamevip_subs", JSON.stringify(subs));
+    alert("Subscribed to " + creator);
+  } else {
+    alert("Already subscribed!");
+  }
+}
+</script>
