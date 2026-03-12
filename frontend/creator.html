@@ -2,14 +2,38 @@
 <html>
 <head>
 <title>Creator Dashboard</title>
-<style>background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
-color: #f5f5f5;
-body { background:#111; color:white; font-family:Arial; padding:40px; }
-input, textarea { width:100%; padding:10px; margin:10px 0; }
-button { background:#ff2e63; border:none; padding:10px; color:white; cursor:pointer; }
-.post { background:#1a1a1a; padding:15px; margin:15px 0; }border-radius: 25px;
-box-shadow: 0 0 15px rgba(255,46,99,0.6);
+
+<style>
+body {
+  margin:0;
+  background: linear-gradient(135deg,#0f0f0f,#1c1c1c);
+  color:#f5f5f5;
+  font-family:Arial;
+  padding:40px;
+}
+
+textarea{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+}
+
+button{
+  background:#ff2e63;
+  border:none;
+  padding:10px;
+  color:white;
+  cursor:pointer;
+}
+
+.post{
+  background:#1a1a1a;
+  padding:15px;
+  margin:15px 0;
+  border-radius:20px;
+}
 </style>
+
 </head>
 <body>
 
@@ -22,27 +46,41 @@ box-shadow: 0 0 15px rgba(255,46,99,0.6);
 <div id="postList"></div>
 
 <script>
-function addPost() {
-  const content = document.getElementById("postContent").value;
-  if(content.trim() === "") return;
 
-  let posts = JSON.parse(localStorage.getItem("creator_posts")) || [];
-  posts.push(content);
-  localStorage.setItem("creator_posts", JSON.stringify(posts));
-  document.getElementById("postContent").value = "";
-  renderPosts();
+function addPost(){
+
+const content=document.getElementById("postContent").value;
+
+if(content.trim()=="") return;
+
+let posts=JSON.parse(localStorage.getItem("creator_posts"))||[];
+
+posts.push(content);
+
+localStorage.setItem("creator_posts",JSON.stringify(posts));
+
+document.getElementById("postContent").value="";
+
+renderPosts();
+
 }
 
-function renderPosts() {
-  const posts = JSON.parse(localStorage.getItem("creator_posts")) || [];
-  const list = document.getElementById("postList");
-  list.innerHTML = "";
-  posts.forEach(p => {
-    list.innerHTML += "<div class='post'>" + p + "</div>";
-  });
+function renderPosts(){
+
+const posts=JSON.parse(localStorage.getItem("creator_posts"))||[];
+
+const list=document.getElementById("postList");
+
+list.innerHTML="";
+
+posts.forEach(p=>{
+list.innerHTML+="<div class='post'>"+p+"</div>";
+});
+
 }
 
 renderPosts();
+
 </script>
 
 </body>
