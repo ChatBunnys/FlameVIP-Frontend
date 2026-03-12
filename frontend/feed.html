@@ -1,106 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Flame VIP Feed</title>
-  <style>
-    body {
-      margin: 0;
-      background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
-      color: white;
-      font-family: Arial, sans-serif;
-      padding: 30px;
-    }
+<title>Flame VIP Feed</title>
 
-    h1, h2, h3 {
-      color: #ff2e63;
-    }
+<style>
+body{
+  margin:0;
+  background:#111;
+  color:white;
+  font-family:Arial;
+  padding:30px;
+}
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-      padding-bottom: 15px;
-      border-bottom: 1px solid #333;
-    }
+.post{
+  background:#1a1a1a;
+  padding:15px;
+  margin:15px 0;
+  border-radius:15px;
+}
 
-    .post {
-      background: #1a1a1a;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 16px;
-      box-shadow: 0 0 12px rgba(255, 46, 99, 0.25);
-    }
+button{
+  background:#ff2e63;
+  border:none;
+  padding:10px;
+  color:white;
+  cursor:pointer;
+}
+</style>
 
-    button {
-      background: #ff2e63;
-      border: none;
-      padding: 10px 16px;
-      color: white;
-      cursor: pointer;
-      border-radius: 10px;
-      font-weight: bold;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-
-    .status {
-      margin-top: 10px;
-      color: #ffd1dc;
-    }
-  </style>
 </head>
 <body>
 
-  <div class="topbar">
-    <h1>Flame VIP Feed</h1>
-    <button onclick="logout()">Logout</button>
-  </div>
+<h1>Flame VIP Feed</h1>
 
-  <p id="welcome"></p>
+<div id="feedPosts"></div>
 
-  <div class="post">
-    <h3>CreatorOne</h3>
-    <p>Exclusive content 🔥</p>
-    <button onclick="subscribe('CreatorOne', 'subStatus1')">Subscribe ($9.99)</button>
-    <p class="status" id="subStatus1"></p>
-  </div>
+<script>
 
-  <div class="post">
-    <h3>CreatorTwo</h3>
-    <p>Premium VIP Drops</p>
-    <button onclick="subscribe('CreatorTwo', 'subStatus2')">Subscribe ($14.99)</button>
-    <p class="status" id="subStatus2"></p>
-  </div>
+const user = localStorage.getItem("flamevip_user");
 
-  <script>
-    const user = localStorage.getItem("flamevip_user");
+if(!user){
+window.location.href="login.html";
+}
 
-    if (!user) {
-      window.location.href = "login.html";
-    }
+function loadFeed(){
 
-    document.getElementById("welcome").innerText = "Logged in as: " + user;
+let posts = JSON.parse(localStorage.getItem("creator_posts")) || [];
 
-    function logout() {
-      localStorage.removeItem("flamevip_user");
-      window.location.href = "index.html";
-    }
+const feed = document.getElementById("feedPosts");
 
-    function subscribe(creator, statusId) {
-      let subs = JSON.parse(localStorage.getItem("flamevip_subs")) || [];
+feed.innerHTML="";
 
-      if (!subs.includes(creator)) {
-        subs.push(creator);
-        localStorage.setItem("flamevip_subs", JSON.stringify(subs));
-        document.getElementById(statusId).innerText = "Subscribed to " + creator + "!";
-      } else {
-        document.getElementById(statusId).innerText = "Already subscribed to " + creator + ".";
-      }
-    }
-  </script>
+posts.forEach(p=>{
+feed.innerHTML += "<div class='post'>" + p + "</div>";
+});
+
+}
+
+loadFeed();
+
+</script>
 
 </body>
 </html>
