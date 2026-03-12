@@ -1,27 +1,68 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 <title>Flame VIP</title>
+
 <style>
-body { background:#0f0f0f; color:white; text-align:center; font-family:Arial; padding:50px; }
-button { background:#ff2e63; border:none; padding:15px; color:white; cursor:pointer; }
-a { color:#ff2e63; }
+
+body{
+  margin:0;
+  background:linear-gradient(135deg,#0f0f0f,#1c1c1c);
+  color:white;
+  text-align:center;
+  font-family:Arial, sans-serif;
+  padding:80px;
+}
+
+h1{
+  font-size:48px;
+  color:#ff2e63;
+}
+
+button{
+  background:#ff2e63;
+  border:none;
+  padding:15px 30px;
+  color:white;
+  cursor:pointer;
+  border-radius:12px;
+  font-size:18px;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+a{
+  color:#ff2e63;
+  text-decoration:none;
+}
+
+a:hover{
+  text-decoration:underline;
+}
+
 </style>
+
 </head>
+
 <body>
 
 <h1>🔥 Flame VIP</h1>
+
 <p>Adults Only (18+)</p>
+
 <button onclick="enter()">Enter</button>
 
 <script>
-function enter() {
-  window.location.href = "login.html";
+function enter(){
+  window.location.href="frontend/login.html";
 }
 </script>
 
-<p><a href="terms.html">Terms of Service</a></p>
+<p>
+<a href="frontend/terms.html">Terms of Service</a>
+</p>
 
 </body>
 </html>
