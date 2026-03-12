@@ -1,38 +1,106 @@
-<div class="post">
-  <h3>CreatorOne</h3>
-  <p>Exclusive content 🔥</p>
-  <button onclick="subscribe('CreatorOne')">Subscribe ($9.99)</button>
-  <p id="subStatus1"></p>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Flame VIP Feed</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
 
-<div class="post">
-  <h3>CreatorTwo</h3>
-  <p>Premium VIP Drops</p>
-  <button onclick="subscribe('CreatorTwo')">Subscribe ($14.99)</button>
-  <p id="subStatus2"></p>
-</div>
-<script>
-const user = localStorage.getItem("flamevip_user");
+    h1, h2, h3 {
+      color: #ff2e63;
+    }
 
-if(!user){
-  window.location.href = "login.html";
-}
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #333;
+    }
 
-document.getElementById("welcome").innerText = "Logged in as: " + user;
+    .post {
+      background: #1a1a1a;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 16px;
+      box-shadow: 0 0 12px rgba(255, 46, 99, 0.25);
+    }
 
-function logout() {
-  localStorage.removeItem("flamevip_user");
-  window.location.href = "index.html";
-}
+    button {
+      background: #ff2e63;
+      border: none;
+      padding: 10px 16px;
+      color: white;
+      cursor: pointer;
+      border-radius: 10px;
+      font-weight: bold;
+    }
 
-function subscribe(creator) {
-  let subs = JSON.parse(localStorage.getItem("flamevip_subs")) || [];
-  if(!subs.includes(creator)) {
-    subs.push(creator);
-    localStorage.setItem("flamevip_subs", JSON.stringify(subs));
-    alert("Subscribed to " + creator);
-  } else {
-    alert("Already subscribed!");
-  }
-}
-</script>
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .status {
+      margin-top: 10px;
+      color: #ffd1dc;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <h1>Flame VIP Feed</h1>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <p id="welcome"></p>
+
+  <div class="post">
+    <h3>CreatorOne</h3>
+    <p>Exclusive content 🔥</p>
+    <button onclick="subscribe('CreatorOne', 'subStatus1')">Subscribe ($9.99)</button>
+    <p class="status" id="subStatus1"></p>
+  </div>
+
+  <div class="post">
+    <h3>CreatorTwo</h3>
+    <p>Premium VIP Drops</p>
+    <button onclick="subscribe('CreatorTwo', 'subStatus2')">Subscribe ($14.99)</button>
+    <p class="status" id="subStatus2"></p>
+  </div>
+
+  <script>
+    const user = localStorage.getItem("flamevip_user");
+
+    if (!user) {
+      window.location.href = "login.html";
+    }
+
+    document.getElementById("welcome").innerText = "Logged in as: " + user;
+
+    function logout() {
+      localStorage.removeItem("flamevip_user");
+      window.location.href = "index.html";
+    }
+
+    function subscribe(creator, statusId) {
+      let subs = JSON.parse(localStorage.getItem("flamevip_subs")) || [];
+
+      if (!subs.includes(creator)) {
+        subs.push(creator);
+        localStorage.setItem("flamevip_subs", JSON.stringify(subs));
+        document.getElementById(statusId).innerText = "Subscribed to " + creator + "!";
+      } else {
+        document.getElementById(statusId).innerText = "Already subscribed to " + creator + ".";
+      }
+    }
+  </script>
+
+</body>
+</html>
