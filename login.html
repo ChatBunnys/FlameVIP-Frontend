@@ -44,51 +44,47 @@
 
   <p><a href="register.html">Create an account</a></p>
 
- <script>
-  async function login() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
+  <script>
+    async function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-    if (!username || !password) {
-      alert("Enter username and password");
-      return;
-    }
-
-    try {
-      const response = await fetch("https://flamevip-backend.onrender.com/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username, password })
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        alert(data.message || "Login failed");
+      if (!username || !password) {
+        alert("Enter username and password");
         return;
       }
 
-      localStorage.setItem("flamevip_user", username);
+      try {
+        const response = await fetch("https://flamevip-backend.onrender.com/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ username, password })
+        });
 
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("flamevip_token", data.token);
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert(data.message || "Login failed");
+          return;
+        }
+
+        localStorage.setItem("flamevip_user", username);
+
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("flamevip_token", data.token);
+        }
+
+        alert("Login successful");
+        window.location.href = "frontend/feed.html";
+      } catch (error) {
+        alert("Server error during login");
+        console.error(error);
       }
-
-      alert("Login successful");
-      window.location.href = "frontend/feed.html";
-
-    } catch (error) {
-      alert("Server error during login");
-      console.error(error);
     }
-  }
-</script>
+  </script>
 
 </body>
 </html>
-
-
-
