@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register - Flame VIP</title>
+  <title>Login - Flame VIP</title>
   <style>
     body {
       margin: 0;
@@ -17,7 +17,7 @@
       margin: 10px;
       width: 250px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
     }
 
     button {
@@ -26,54 +26,61 @@
       padding: 10px 20px;
       color: white;
       cursor: pointer;
-      border-radius: 6px;
+      border-radius: 8px;
     }
 
-    button:hover {
-      opacity: 0.9;
+    a {
+      color: #ff2e63;
     }
   </style>
 </head>
 <body>
 
-  <h2>Register</h2>
+  <h2>Login</h2>
 
   <input type="text" id="username" placeholder="Username"><br>
   <input type="password" id="password" placeholder="Password"><br>
-  <button onclick="register()">Register</button>
+  <button onclick="login()">Login</button>
+
+  <p><a href="register.html">Create an account</a></p>
 
   <script>
-    async function register() {
+    async function login() {
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
 
       if (!username || !password) {
-        alert("Enter both username and password");
+        alert("Enter username and password");
         return;
       }
 
       try {
-        const response = await fetch("https://flamevip-backend.onrender.com/auth/register", {
+        const response = await fetch("https://flamevip-backend.onrender.com/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({
-            username: username,
-            password: password
-          })
+          body: JSON.stringify({ username, password })
         });
 
         const data = await response.json();
 
-        if (response.ok) {
-          alert(data.message || "Registration successful!");
-          window.location.href = "login.html";
-        } else {
-          alert(data.message || "Registration failed");
+        if (!response.ok) {
+          alert(data.message || "Login failed");
+          return;
         }
+
+        localStorage.setItem("flamevip_user", username);
+
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("flamevip_token", data.token);
+        }
+
+        alert("Login successful");
+        window.location.href = "feed.html";
       } catch (error) {
-        alert("Server error. Please try again.");
+        alert("Server error during login");
         console.error(error);
       }
     }
