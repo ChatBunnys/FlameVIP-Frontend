@@ -6,9 +6,7 @@ async function registerUser() {
 
   const res = await fetch(`${API}/auth/register`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password })
   });
 
@@ -19,25 +17,20 @@ async function registerUser() {
     return;
   }
 
-  // Auto-login after registration
+  // Auto-login after register
   const loginRes = await fetch(`${API}/auth/login`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password })
   });
 
   const loginData = await loginRes.json();
 
   if (!loginRes.ok) {
-    document.getElementById("error").innerText = loginData.error || "Login failed after registration";
+    document.getElementById("error").innerText = loginData.error || "Login failed";
     return;
   }
 
-  // Save token
   localStorage.setItem("token", loginData.token);
-
-  // Redirect to feed
   window.location.href = "feed.html";
 }
