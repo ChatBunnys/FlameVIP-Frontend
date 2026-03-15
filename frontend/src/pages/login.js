@@ -19,9 +19,7 @@ async function login() {
     return;
   }
 
-  // ⭐ Save the token for the feed page
   localStorage.setItem("token", data.token);
 
-  // ⭐ Redirect to feed
   window.location.href = "feed.html";
 }
