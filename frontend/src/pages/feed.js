@@ -25,17 +25,41 @@ async function loadFeed(page = 1) {
 // Create a new post
 async function createPost() {
   const content = document.getElementById("newPost").value;
+  const file = document.getElementById("mediaUpload").files[0];
   const token = getToken();
 
-  if (!content.trim()) return;
+  let mediaUrl = null;
 
+  // Upload media if selected
+  if (file) {
+    const form = new FormData();
+    form.append("file", file);
+
+    const uploadRes = await fetch(`${API}/upload`, {
+      method: "POST",
+      headers: { "Authorization": "Bearer " + token },
+      body: form
+    });
+
+    const uploadData = await uploadRes.json();
+    mediaUrl = uploadData.url;
+  }
+
+  // Create post with media
   await fetch(`${API}/feed/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + token
     },
-    body: JSON.stringify({ content })
+    body: JSON.stringify({ content, media: mediaUrl })
+  });
+
+  document.getElementById("newPost").value = "";
+  document.getElementById("mediaUpload").value = "";
+  loadFeed();
+}
+
   });
 
   document.getElementById("newPost").value = "";
