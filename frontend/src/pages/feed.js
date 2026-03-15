@@ -4,6 +4,7 @@ function getToken() {
   return localStorage.getItem("token");
 }
 
+// Load feed from backend
 async function loadFeed(page = 1) {
   const token = getToken();
 
@@ -12,12 +13,21 @@ async function loadFeed(page = 1) {
   });
 
   const data = await res.json();
+
+  if (!res.ok) {
+    console.error("Feed load error:", data);
+    return;
+  }
+
   renderFeed(data.data);
 }
 
+// Create a new post
 async function createPost() {
   const content = document.getElementById("newPost").value;
   const token = getToken();
+
+  if (!content.trim()) return;
 
   await fetch(`${API}/feed/create`, {
     method: "POST",
@@ -32,6 +42,7 @@ async function createPost() {
   loadFeed();
 }
 
+// Like a post
 async function likePost(id) {
   const token = getToken();
 
@@ -43,9 +54,12 @@ async function likePost(id) {
   loadFeed();
 }
 
+// Comment on a post
 async function commentOnPost(id) {
   const text = document.getElementById(`comment-${id}`).value;
   const token = getToken();
+
+  if (!text.trim()) return;
 
   await fetch(`${API}/feed/${id}/comment`, {
     method: "POST",
@@ -59,6 +73,7 @@ async function commentOnPost(id) {
   loadFeed();
 }
 
+// Render posts into the feed
 function renderFeed(posts) {
   const feed = document.getElementById("feed");
   feed.innerHTML = "";
