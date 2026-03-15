@@ -22,10 +22,10 @@ async function loadFeed(page = 1) {
   renderFeed(data.data);
 }
 
-// Create a new post
+// Create a new post (supports media upload)
 async function createPost() {
   const content = document.getElementById("newPost").value;
-  const file = document.getElementById("mediaUpload").files[0];
+  const file = document.getElementById("mediaUpload")?.files[0];
   const token = getToken();
 
   let mediaUrl = null;
@@ -56,13 +56,10 @@ async function createPost() {
   });
 
   document.getElementById("newPost").value = "";
-  document.getElementById("mediaUpload").value = "";
-  loadFeed();
-}
+  if (document.getElementById("mediaUpload")) {
+    document.getElementById("mediaUpload").value = "";
+  }
 
-  });
-
-  document.getElementById("newPost").value = "";
   loadFeed();
 }
 
@@ -110,6 +107,8 @@ function renderFeed(posts) {
       <div class="post-header">@${post.user}</div>
       <div class="post-time">${new Date(post.createdAt).toLocaleString()}</div>
       <div>${post.content}</div>
+
+      ${post.media ? `<img src="${post.media}" style="width:100%;border-radius:10px;margin-top:10px;">` : ""}
 
       <button class="like-btn" onclick="likePost(${post.id})">
         ❤️ ${post.likes}
