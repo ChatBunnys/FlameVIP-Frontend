@@ -53,39 +53,30 @@ export default function Feed() {
   return (
     <div>
       <h1>🔥 Flame VIP Feed</h1>
-      
-      <form onSubmit={handlePost} style={{ marginBottom: '20px' }}>
+      <form onSubmit={handlePost}>
         <textarea
-          placeholder="What's on your mind?"
           value={newPost}
           onChange={(e) => setNewPost(e.target.value)}
           style={{ width: '100%', padding: '10px', borderRadius: '8px' }}
-        ></textarea>
+          placeholder="What's on your mind?"
+        />
         <button type="submit">Post</button>
       </form>
 
-      <div id="feed">
+      <div>
         {posts.length === 0 ? (
           <p>No posts yet. Be the first to post!</p>
         ) : (
           posts.map(post => (
-            <div key={post._id} className="post-card" style={{ marginBottom: '20px', padding: '15px', background: '#1a1a1d', borderRadius: '8px' }}>
-              <div><strong>@{post.user}</strong> - {new Date(post.createdAt).toLocaleString()}</div>
-              <div style={{ margin: '10px 0' }}>{post.content}</div>
+            <div key={post.id} style={{ border: '1px solid #ff8df2', padding: '10px', margin: '10px 0', borderRadius: '8px' }}>
+              <strong>@{post.user}</strong> - {new Date(post.createdAt).toLocaleString()}
+              <p>{post.content}</p>
               {post.media && <img src={post.media} style={{ maxWidth: '100%', borderRadius: '8px' }} />}
-              <div>❤️ {post.likes || 0} likes</div>
+              <p>❤️ {post.likes || 0} likes</p>
             </div>
           ))
         )}
       </div>
-    </div>
-  );
-}
-export default function Feed(){
-  return (
-    <div>
-      <h1>🔥 Flame VIP Feed</h1>
-      <p>Creator posts will appear here.</p>
     </div>
   );
 }
