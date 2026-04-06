@@ -1,9 +1,13 @@
+export default function AgeGate() {
+  const handleConfirm = () => {
+    localStorage.setItem('isAdult', 'true');
+    window.location.reload();
+  };
 
-export default function AgeGate(){
   return (
     <div>
       <h1>Adults Only (18+)</h1>
-      <button onClick={()=>{localStorage.setItem('isAdult','true'); location.reload();}}>
+      <button onClick={handleConfirm}>
         I am 18 or older
       </button>
     </div>
