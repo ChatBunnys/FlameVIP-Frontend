@@ -6,7 +6,8 @@ export default function App() {
   const isAdult = localStorage.getItem('isAdult');
   const token = localStorage.getItem('token');
 
-  if (!isAdult) return <AgeGate />;
-  if (!token) return <Login />;
-  return <Feed />;
+  
+if (!isAdult) return <AgeGate />;
+if (!token) return <Login />;
+return <Feed />;
 }
