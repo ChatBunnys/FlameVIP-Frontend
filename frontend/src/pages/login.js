@@ -4,14 +4,23 @@ async function login() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
+  if (!username || !password) {
+    document.getElementById("error").innerText = "Username and password required";
+    return;
+  }
+
   const res = await fetch(`${API}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password })
   });
 
-const username = document.getElementById("username").value; // ✅ CORRECT
-body: JSON.stringify({ username, password })               // ✅ Sends 'username'
+  const data = await res.json();
+
+  if (!res.ok) {
+    document.getElementById("error").innerText = data.error || "Login failed";
+    return;
+  }
 
   localStorage.setItem("token", data.token);
   window.location.href = "feed.html";
