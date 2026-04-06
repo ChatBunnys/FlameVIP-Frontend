@@ -10,12 +10,8 @@ async function login() {
     body: JSON.stringify({ username, password })
   });
 
-  const data = await res.json();
-
-  if (!res.ok) {
-    document.getElementById("error").innerText = data.error || "Login failed";
-    return;
-  }
+const username = document.getElementById("username").value; // ✅ CORRECT
+body: JSON.stringify({ username, password })               // ✅ Sends 'username'
 
   localStorage.setItem("token", data.token);
   window.location.href = "feed.html";
